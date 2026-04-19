@@ -72,8 +72,16 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
-export function AdminSidebar() {
-  const [open, setOpen] = useState(false);
+interface AdminSidebarProps {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
+export function AdminSidebar({ open: openProp, onOpenChange }: AdminSidebarProps = {}) {
+  const [uncontrolled, setUncontrolled] = useState(false);
+  const open = openProp ?? uncontrolled;
+  const setOpen = onOpenChange ?? setUncontrolled;
+  const controlled = openProp !== undefined;
 
   return (
     <>
@@ -86,16 +94,18 @@ export function AdminSidebar() {
 
       <div className="lg:hidden">
         <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              aria-label="Abrir menu"
-              className="fixed left-3 top-3 z-30"
-            >
-              <Menu className="size-5" aria-hidden />
-            </Button>
-          </SheetTrigger>
+          {controlled ? null : (
+            <SheetTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label="Abrir menu"
+                className="fixed left-3 top-3 z-30"
+              >
+                <Menu className="size-5" aria-hidden />
+              </Button>
+            </SheetTrigger>
+          )}
           <SheetContent
             side="left"
             className="w-[240px] border-border-card bg-bg-card p-0"
