@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Rajdhani, Inter } from "next/font/google";
 import "./globals.css";
+import { QueryProvider } from "@/components/providers/QueryProvider";
+import { ToastProvider } from "@/components/providers/ToastProvider";
 
 const rajdhani = Rajdhani({
   variable: "--font-rajdhani",
@@ -31,7 +33,11 @@ export default function RootLayout({
       lang="en"
       className={`${rajdhani.variable} ${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-inter">{children}</body>
+      <body className="min-h-full flex flex-col font-inter">
+        <QueryProvider>
+          <ToastProvider>{children}</ToastProvider>
+        </QueryProvider>
+      </body>
     </html>
   );
 }

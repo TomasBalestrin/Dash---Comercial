@@ -13,12 +13,13 @@ function variantFor(type: ToastType) {
   return type === "error" ? ("destructive" as const) : ("default" as const);
 }
 
-export function ToastProvider() {
+export function ToastProvider({ children }: { children: React.ReactNode }) {
   const toasts = useToastStore((s) => s.toasts);
   const dismiss = useToastStore((s) => s.dismiss);
 
   return (
     <RadixToastProvider>
+      {children}
       {toasts.map(({ id, type, message }) => (
         <Toast
           key={id}
