@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import { User } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { User, Users } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { EmptyState } from "@/components/shared/EmptyState";
 import { CloserCard } from "@/components/closers/CloserCard";
 import {
   useClosers,
@@ -17,6 +17,7 @@ interface CloserListProps {
 }
 
 export function CloserList({ onEdit }: CloserListProps) {
+  const router = useRouter();
   const teamsQuery = useTeams();
   const closersQuery = useClosers();
   const deleteCloser = useDeleteCloser();
@@ -40,31 +41,25 @@ export function CloserList({ onEdit }: CloserListProps) {
 
   if (teams.length === 0) {
     return (
-      <div
-        role="status"
-        className="flex flex-col items-center justify-center gap-4 rounded-card border border-dashed border-border-card bg-bg-card p-12 text-center"
-      >
-        <p className="text-sm text-muted-foreground">
-          Crie um time antes de cadastrar closers.
-        </p>
-        <Button asChild>
-          <Link href="/admin/times">Ir para Times</Link>
-        </Button>
-      </div>
+      <EmptyState
+        icon={Users}
+        title="Crie um time primeiro"
+        description="Closers precisam estar vinculados a um time antes de serem cadastrados."
+        action={{
+          label: "Ir para Times",
+          onClick: () => router.push("/admin/times"),
+        }}
+      />
     );
   }
 
   if (closers.length === 0) {
     return (
-      <div
-        role="status"
-        className="flex flex-col items-center justify-center gap-3 rounded-card border border-dashed border-border-card bg-bg-card p-12 text-center"
-      >
-        <User className="size-8 text-muted-foreground" aria-hidden />
-        <p className="text-sm text-muted-foreground">
-          Nenhum closer cadastrado ainda.
-        </p>
-      </div>
+      <EmptyState
+        icon={User}
+        title="Nenhum closer cadastrado"
+        description="Clique em Novo closer para adicionar o primeiro do time."
+      />
     );
   }
 

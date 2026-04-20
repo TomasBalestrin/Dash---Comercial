@@ -2,6 +2,7 @@
 
 import { Users } from "lucide-react";
 
+import { EmptyState } from "@/components/shared/EmptyState";
 import { TeamCard } from "@/components/teams/TeamCard";
 import { useDeleteTeam, useTeams, type TeamRow } from "@/hooks/useTeams";
 
@@ -29,15 +30,11 @@ export function TeamList({ onEdit }: TeamListProps) {
 
   if (!teams || teams.length === 0) {
     return (
-      <div
-        role="status"
-        className="flex flex-col items-center justify-center gap-3 rounded-card border border-dashed border-border-card bg-bg-card p-12 text-center"
-      >
-        <Users className="size-8 text-muted-foreground" aria-hidden />
-        <p className="text-sm text-muted-foreground">
-          Nenhum time cadastrado ainda.
-        </p>
-      </div>
+      <EmptyState
+        icon={Users}
+        title="Nenhum time cadastrado"
+        description="Clique em Novo time para começar a organizar seus closers."
+      />
     );
   }
 

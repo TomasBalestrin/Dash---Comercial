@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Loader2 } from "lucide-react";
+import { Loader2, Phone } from "lucide-react";
 import { formatInTimeZone } from "date-fns-tz";
 
+import { EmptyState } from "@/components/shared/EmptyState";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -139,6 +140,12 @@ export function MetricsEditor() {
         <div className="text-sm text-muted-foreground">Carregando métricas...</div>
       ) : isError ? (
         <div className="text-sm text-destructive">Erro ao carregar métricas.</div>
+      ) : rows.length === 0 ? (
+        <EmptyState
+          icon={Phone}
+          title="Nenhum closer para registrar métricas"
+          description="Cadastre closers em /admin/closers para começar a acompanhar calls e conversão."
+        />
       ) : (
         <div className="rounded-card border border-border-card bg-bg-card">
           <Table>

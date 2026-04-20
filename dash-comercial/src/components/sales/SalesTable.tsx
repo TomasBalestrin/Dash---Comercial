@@ -30,6 +30,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { CloserAvatar } from "@/components/closers/CloserAvatar";
+import { EmptyState } from "@/components/shared/EmptyState";
 import { useClosers, type CloserRow } from "@/hooks/useClosers";
 import { useProducts, type ProductRow } from "@/hooks/useProducts";
 import { type SaleRow } from "@/hooks/useSales";
@@ -76,15 +77,11 @@ export function SalesTable({
 
   if (sales.length === 0) {
     return (
-      <div
-        role="status"
-        className="flex flex-col items-center justify-center gap-3 rounded-card border border-dashed border-border-card bg-bg-card p-12 text-center"
-      >
-        <ShoppingCart className="size-8 text-muted-foreground" aria-hidden />
-        <p className="text-sm text-muted-foreground">
-          Nenhuma venda encontrada.
-        </p>
-      </div>
+      <EmptyState
+        icon={ShoppingCart}
+        title="Nenhuma venda encontrada"
+        description="Ajuste os filtros ou registre uma nova venda."
+      />
     );
   }
 

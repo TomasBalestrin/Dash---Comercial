@@ -23,6 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { EmptyState } from "@/components/shared/EmptyState";
 import { ProductInlineForm } from "@/components/products/ProductInlineForm";
 import {
   useDeleteProduct,
@@ -53,15 +54,11 @@ export function ProductTable() {
 
   if (!products || products.length === 0) {
     return (
-      <div
-        role="status"
-        className="flex flex-col items-center justify-center gap-3 rounded-card border border-dashed border-border-card bg-bg-card p-12 text-center"
-      >
-        <Package className="size-8 text-muted-foreground" aria-hidden />
-        <p className="text-sm text-muted-foreground">
-          Nenhum produto cadastrado ainda.
-        </p>
-      </div>
+      <EmptyState
+        icon={Package}
+        title="Nenhum produto cadastrado"
+        description="Use o campo no topo da página para adicionar o primeiro."
+      />
     );
   }
 
