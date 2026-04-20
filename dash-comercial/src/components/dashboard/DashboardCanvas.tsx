@@ -2,12 +2,18 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { GoalCard } from "@/components/dashboard/GoalCard";
+import { LatestSalesCard } from "@/components/dashboard/LatestSalesCard";
+import { PodiumCard } from "@/components/dashboard/PodiumCard";
+import { ProductsCard } from "@/components/dashboard/ProductsCard";
 import { useDashboardSnapshot } from "@/hooks/useDashboardSnapshot";
+
+const PODIUM_GLOW = process.env.NEXT_PUBLIC_PODIUM_GLOW === "true";
 
 export function DashboardCanvas() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
-  const { isConnected } = useDashboardSnapshot();
+  const { snapshot, isConnected } = useDashboardSnapshot();
 
   useEffect(() => {
     function resize() {
@@ -34,11 +40,17 @@ export function DashboardCanvas() {
           transformOrigin: "center center",
         }}
       >
-        <div
-          id="dash-left"
-          className="flex w-[774px] flex-col gap-5"
-        >
-          LEFT
+        <div id="dash-left" className="flex w-[774px] flex-col gap-5">
+          {snapshot ? (
+            <>
+              <GoalCard goal={snapshot.goal} />
+              <PodiumCard top3={snapshot.top3} glow={PODIUM_GLOW} />
+              <div className="grid flex-1 grid-cols-2 gap-5">
+                <ProductsCard products={snapshot.products} />
+                <LatestSalesCard latestSales={snapshot.latestSales} />
+              </div>
+            </>
+          ) : null}
         </div>
         <div id="dash-right" className="flex flex-1 gap-5">
           RIGHT
