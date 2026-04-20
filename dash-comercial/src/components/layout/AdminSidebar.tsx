@@ -4,7 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
+  ExternalLink,
   Menu,
+  Monitor,
   Package,
   Phone,
   ShoppingCart,
@@ -68,6 +70,23 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
           );
         })}
       </ul>
+
+      <div className="border-t border-border-card pt-4">
+        <a
+          href="/dashboard"
+          target="_blank"
+          rel="noopener"
+          onClick={onNavigate}
+          className="flex items-center gap-3 rounded-md border-l-2 border-transparent px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-bg-cardSoft hover:text-white"
+        >
+          <Monitor className="size-4" aria-hidden />
+          <span className="flex-1">Abrir Dashboard</span>
+          <ExternalLink
+            className="size-3.5 text-muted-foreground"
+            aria-hidden
+          />
+        </a>
+      </div>
     </nav>
   );
 }
