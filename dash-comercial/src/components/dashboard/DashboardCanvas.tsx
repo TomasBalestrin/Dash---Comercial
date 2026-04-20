@@ -6,6 +6,7 @@ import { GoalCard } from "@/components/dashboard/GoalCard";
 import { LatestSalesCard } from "@/components/dashboard/LatestSalesCard";
 import { PodiumCard } from "@/components/dashboard/PodiumCard";
 import { ProductsCard } from "@/components/dashboard/ProductsCard";
+import { TeamColumn } from "@/components/dashboard/TeamColumn";
 import { useDashboardSnapshot } from "@/hooks/useDashboardSnapshot";
 
 const PODIUM_GLOW = process.env.NEXT_PUBLIC_PODIUM_GLOW === "true";
@@ -53,7 +54,14 @@ export function DashboardCanvas() {
           ) : null}
         </div>
         <div id="dash-right" className="flex flex-1 gap-5">
-          RIGHT
+          {snapshot?.teams.map((team) => (
+            <div
+              key={team.id}
+              className="relative flex flex-1 flex-col gap-4"
+            >
+              <TeamColumn team={team} />
+            </div>
+          ))}
         </div>
       </div>
 
